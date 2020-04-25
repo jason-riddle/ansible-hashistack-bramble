@@ -1,0 +1,5 @@
+---
+- name: Add authorized ssh keys.
+  authorized_key:
+    user: pi
+    key: https://github.com/jason-riddle.keys

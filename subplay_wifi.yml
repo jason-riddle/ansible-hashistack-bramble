@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: yes
+
+  vars_files:
+    - vaulted_vars/wpa_supplicant_sensitive.yml
+
+  roles:
+    # Configure WiFi
+    - jason_riddle.ansible-wpa_supplicant-role
+
+  post_tasks:
+    - import_tasks: tasks/ping.yml

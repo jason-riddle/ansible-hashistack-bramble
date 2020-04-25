@@ -1,0 +1,60 @@
+---
+- hosts: consul_instances
+  become: yes
+
+  pre_tasks:
+    - import_tasks: tasks/custom_facts.yml
+
+  roles:
+    - {role: brianshumate.consul, tags: ['consul']}
+
+  vars:
+    consul_iface: eth0
+    consul_datacenter: "homeserver"
+    consul_acl_datacenter: "homeserver"
+    consul_domain: "consul"
+    consul_recursors: "{{ bramble_dns_nameservers }}"
+    # Modify below with caution
+    consul_client_address: "0.0.0.0"
+    consul_dnsmasq_enable: yes
+    consul_acl_master_token_display: yes
+
+- hosts: vault_instances
+  become: yes
+
+  roles:
+    - {role: brianshumate.vault, tags: ['vault']}
+
+  vars:
+    vault_iface: eth0
+    vault_cluster_name: "dc1"
+    vault_datacenter: "homeserver"
+    vault_domain: "consul"
+    # Modify below with caution
+    vault_ui: yes
+    vault_cluster_disable: yes
+
+- hosts: nomad_instances
+  become: true
+
+  vars_files:
+    - vaulted_vars/nomad_sensitive.yml
+
+  roles:
+    - {role: geerlingguy.docker_arm, tags: ['docker']}
+    - {role: brianshumate.nomad, tags: ['docker', 'nomad']}
+
+  vars:
+    nomad_iface: eth0
+    nomad_network_interface: eth0
+    nomad_datacenter: "homeserver"
+    nomad_domain: "consul"
+    # Modify below with caution
+    nomad_bootstrap_expect: 1
+    nomad_consul_address: http://127.0.0.1:8500
+    nomad_vault_address: http://active.vault.service.homeserver.consul:8200
+    nomad_bind_address: "0.0.0.0"
+    nomad_use_consul: yes
+    nomad_vault_enabled: yes
+    nomad_docker_enable: yes
+    nomad_network_speed: 10

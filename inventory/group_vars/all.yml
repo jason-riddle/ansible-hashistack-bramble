@@ -1,0 +1,26 @@
+---
+## Ansible
+
+ansible_ssh_user: pi
+ansible_ssh_pass: raspberry
+ansible_python_interpreter: /usr/bin/python
+
+## Static Networking
+
+# Mapping of what eth0 MAC addresses should be configured with specific IPs.
+mac_address_mapping:
+  "b8:27:eb:21:e8:fd":
+    hostname: "pi01"
+    ip: "10.0.100.61"
+
+# Nameservers to use in resolv.conf.
+dns_nameservers:
+  - "8.8.8.8"
+  - "8.8.4.4"
+
+## WPA Supplicant
+wpa_cli_reconfigure: yes
+wpa_country: US
+wpa_ctrl_interface: "DIR=/var/run/wpa_supplicant GROUP=netdev"
+wpa_passphrase: no
+wpa_update_config: 1

@@ -1,0 +1,98 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+    - name: Set bramble_mac_address fact.
+      set_fact:
+        bramble_mac_address: "{{ hostvars[inventory_hostname].ansible_eth0.macaddress }}"
+
+    - name: Set bramble_hostname and bramble_ip_address fact.
+      set_fact:
+        bramble_hostname: "{{ mac_address_mapping[bramble_mac_address].hostname }}"
+        bramble_ip_address: "{{ mac_address_mapping[bramble_mac_address].ip }}"
+
+    - name: Ensure /etc/resolvconf/resolv.conf.d exists.
+      file: path=/etc/resolvconf/resolv.conf.d state=directory
+
+    - name: Setup resolv.conf.
+      template:
+        src: "templates/{{ item.template }}"
+        dest: "{{ item.dest }}"
+        mode: 0644
+      with_items:
+        - { template: networking/resolv.conf.j2, dest: /etc/resolvconf/resolv.conf.d/head }
+      notify:
+        - update resolvconf
+        - reboot host
+
+    # Update resolvconf before proceeding.
+    - meta: flush_handlers
+
+    - name: Configure eth0 interfact to use static ip.
+      template:
+        src: "templates/{{ item.template }}"
+        dest: "{{ item.dest }}"
+        mode: 0644
+      with_items:
+        - { template: networking/dhcpcd.conf.j2, dest: /etc/dhcpcd.conf }
+      notify:
+        - delete dhcp leases
+        - reboot host
+
+    # Delete dhcp leases before proceeding.
+    - meta: flush_handlers
+
+    - name: Set the hostname.
+      template:
+        src: "templates/{{ item.template }}"
+        dest: "{{ item.dest }}"
+        mode: 0644
+      with_items:
+        - { template: networking/hostname.j2, dest: /etc/hostname }
+      notify:
+        - update hostname
+        - reboot host
+
+    # Update hostname before proceeding.
+    - meta: flush_handlers
+
+    - name: Setup /etc/hosts.
+      template:
+        src: "templates/{{ item.template }}"
+        dest: "{{ item.dest }}"
+        mode: 0644
+      with_items:
+        - { template: networking/hosts.j2, dest: /etc/hosts }
+      notify:
+        - reboot host
+
+    # Reboot host before proceeding.
+    - meta: flush_handlers
+
+  post_tasks:
+    - import_tasks: tasks/ping.yml
+
+  handlers:
+    - name: update hostname
+      command: "hostname {{ bramble_hostname }}"
+
+    - name: update resolvconf
+      command: "resolvconf -u"
+
+    - name: delete dhcp leases
+      file:
+        path: /var/lib/dhcp/dhclient.leases
+        state: absent
+      with_items:
+        - /var/lib/dhcp/dhclient.leases
+        - /var/lib/dhcpcd5/dhcpcd-eth0.lease
+
+    - name: reboot host
+      reboot:
+        msg: "Reboot initiated by Ansible"
+        connect_timeout: 3
+        reboot_timeout: 600
+        pre_reboot_delay: 0
+        post_reboot_delay: 10
+        test_command: whoami

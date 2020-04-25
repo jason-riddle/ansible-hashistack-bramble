@@ -1,0 +1,26 @@
+---
+- name: Ensure custom facts directory exists.
+  file:
+    path: "/etc/ansible/facts.d"
+    state: "directory"
+    recurse: yes
+
+- name: Check if node is registered.
+  stat:
+    path: /var/lib/amazon/ssm/registration
+  register: ssm_registration_file
+
+- name: Read registration details.
+  slurp:
+    path: /var/lib/amazon/ssm/registration
+  when: ssm_registration_file.stat.exists
+  register: registration
+
+- name: Set bramble_instance_id fact.
+  set_fact:
+    bramble_instance_id: "{{ (registration.content|b64decode|from_json).ManagedInstanceID }}"
+  when: ssm_registration_file.stat.exists
+
+- debug:
+    var: bramble_instance_id
+  when: ssm_registration_file.stat.exists

@@ -1,0 +1,16 @@
+127.0.0.1 localhost
+::1       localhost ip6-localhost ip6-loopback
+fe00::0   ip6-localnet
+ff00::0   ip6-mcastprefix
+ff02::1   ip6-allnodes
+ff02::2   ip6-allrouters
+
+127.0.1.1 {{ bramble_hostname }}.cluster.local
+
+{# Add an entry for each host in the cluster, using the loop index to map IPs #}
+{% for mac_address in mac_address_mapping -%}
+{% set ip_address = mac_address_mapping[mac_address].ip -%}
+{% set machine = mac_address_mapping[mac_address].hostname -%}
+
+{{ ip_address }} {{ machine }} {{ machine }}.bramble.local
+{% endfor %}

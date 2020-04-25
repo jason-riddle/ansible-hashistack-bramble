@@ -1,0 +1,8 @@
+---
+- name: Ping google.com.
+  command: "ping -c 1 -w 2 google.com"
+  register: task_result
+  until: task_result.rc == 0
+  retries: 10
+  delay: 3
+  ignore_errors: yes

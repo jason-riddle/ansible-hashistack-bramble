@@ -1,0 +1,7 @@
+---
+- name: jason_riddle.ansible-wpa_supplicant-role
+  src: https://github.com/jason-riddle/ansible-wpa_supplicant-role
+- src: geerlingguy.docker_arm
+- src: brianshumate.consul
+- src: brianshumate.vault
+- src: brianshumate.nomad

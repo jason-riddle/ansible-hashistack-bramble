@@ -1,0 +1,3 @@
+- import_playbook: subplay_static_network.yml
+- import_playbook: subplay_wifi.yml
+- import_playbook: subplay_ssm.yml

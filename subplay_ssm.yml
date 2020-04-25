@@ -1,0 +1,42 @@
+---
+- hosts: all
+  become: yes
+
+  vars_files:
+    - vaulted_vars/ssm_agent_sensitive.yml
+
+  tasks:
+    - name: Ensure amazon-ssm-agent is installed.
+      apt:
+        deb: "https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/debian_arm/amazon-ssm-agent.deb"
+        state: present
+
+    - name: Check if node is registered.
+      stat:
+        path: /var/lib/amazon/ssm/registration
+      register: ssm_registration_file
+
+    - name: Register managed instance.
+      command: amazon-ssm-agent -register -clear -code "{{ amazon_ssm_activation_code }}" -id "{{ amazon_ssm_activation_id }}" -region "{{ amazon_ssm_ec2_region }}" -y  # noqa 204
+      when: not ssm_registration_file.stat.exists
+      notify:
+        - restart amazon-ssm-agent
+
+    # Restart amazon-ssm-agent before proceeding.
+    - meta: flush_handlers
+
+    # Pause for 5 seconds to allow amazon-ssm-agent to start.
+    - pause:
+        seconds: 5
+
+    - name: Ensure amazon-ssm-agent is started and enabled.
+      service:
+        name: amazon-ssm-agent
+        state: started
+        enabled: true
+
+  handlers:
+    - name: restart amazon-ssm-agent
+      service:
+        name: amazon-ssm-agent
+        state: restarted
