@@ -1,4 +1,6 @@
 ---
+- name: jason_riddle.collectd
+  src: https://github.com/jason-riddle/ansible-collectd
 - src: jason_riddle.amazon_ssm_agent
 - src: jason_riddle.wpa_supplicant
 - src: geerlingguy.docker_arm

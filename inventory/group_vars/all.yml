@@ -24,3 +24,10 @@ wpa_country: US
 wpa_ctrl_interface: "DIR=/var/run/wpa_supplicant GROUP=netdev"
 wpa_passphrase: no
 wpa_update_config: 1
+
+## Collectd
+collectd_plugins:
+  - cpu
+
+packages:
+  - collectd

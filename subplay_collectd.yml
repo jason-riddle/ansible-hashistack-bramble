@@ -1,0 +1,7 @@
+---
+- hosts: all
+  become: yes
+
+  roles:
+    # Configure collectd
+    - jason_riddle.collectd
