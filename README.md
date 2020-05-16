@@ -47,6 +47,30 @@ monitoring, and control.
 Place **non-sensitive** group variables in `inventory/group_vars` and
 **sensitive** group variables in `vaulted_vars`.
 
+For datadog configuration, create a `vaulted_vars/datadog_sensitive.yml` file
+and add the following
+
+    datadog_api_key: "DATADOG_API_KEY"
+
+For nomad configuration, create a `vaulted_vars/nomad_sensitive.yml` file
+and add the root vault token after vault has been initialized
+
+    nomad_vault_token: "VAULT_ROOT_TOKEN"
+
+For amazon ssm agent configuration, create a `vaulted_vars/ssm_agent_sensitive.yml`
+file and add the following
+
+    amazon_ssm_ec2_region: "SSM_REGION"
+    amazon_ssm_activation_code: "SSM_ACTIVATION_CODE"
+    amazon_ssm_activation_id: "SSM_ACTIVATION_ID"
+
+For wifi configuration, create a `vaulted_vars/wpa_supplicant_sensitive.yml`
+file and add your wifi configuration
+
+    wpa_networks:
+      - ssid: ROUTER_SSID
+        psk: ROUTER_PASSWORD
+
 ### 3 - Configure to use a static IP
 
 It's a good idea to configure your machine to use a static IP. For mac, this
