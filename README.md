@@ -87,9 +87,11 @@ requires configuring Ethernet under Network Settings. For example:
 
 Discover hosts by pinging the multicast address for all nodes. This assumes
 devices you want to connect to and your computer are on the same bridge. For
-mac, use the `en0` interface.
+mac, use the `en0` interface and use the following to identify ipv6 hosts
 
-    ping6 -c2 -n ff02::1%en0
+    myself=$(ifconfig en0 | grep -w 'inet6' | awk '{print $2}')
+    ipv6_hosts=$(ping6 -c2 -I en0 ff02::1 | grep icmp_seq | grep -v $myself | cut -d, -f1 | awk '{print $NF}')
+    echo $ipv6_hosts
 
 Then add these hosts to `inventory/hosts`. For example:
 
