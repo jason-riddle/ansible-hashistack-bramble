@@ -73,13 +73,15 @@ file and add your wifi configuration
 
 ### 3 - Configure to use a static IP
 
-It's a good idea to configure your machine to use a static IP. For mac, this
+It's required to configure your machine to use a static IP. For mac, this
 requires configuring Ethernet under Network Settings. For example:
 
     Configure IPv4: Manually
     IP Address      10.0.100.59
     Subnet Mask:    255.255.255.0
     Router:         <empty>
+
+    Configure IPv6: Link-local only
 
 ### 4 - Discover hosts
 
