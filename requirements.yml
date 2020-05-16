@@ -1,6 +1,6 @@
 ---
-- name: jason_riddle.ansible-wpa_supplicant-role
-  src: https://github.com/jason-riddle/ansible-wpa_supplicant-role
+- src: jason_riddle.amazon_ssm_agent
+- src: jason_riddle.wpa_supplicant
 - src: geerlingguy.docker_arm
 - src: brianshumate.consul
 - src: brianshumate.vault

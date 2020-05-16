@@ -7,7 +7,7 @@
 
   roles:
     # Configure WiFi
-    - jason_riddle.ansible-wpa_supplicant-role
+    - jason_riddle.wpa_supplicant
 
   post_tasks:
     - import_tasks: tasks/ping.yml
