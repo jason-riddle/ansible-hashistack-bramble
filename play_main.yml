@@ -10,6 +10,7 @@
     consul_acl_datacenter: "homeserver"
     consul_domain: "consul"
     consul_recursors: "{{ dns_nameservers }}"
+    consul_syslog_enable: yes
     # Think carefully before modifying the following variables
     consul_iface: eth0 # TODO: This actually isn't being used anywhere in the upstream consul role, might be a bug
     consul_client_address: "0.0.0.0"
