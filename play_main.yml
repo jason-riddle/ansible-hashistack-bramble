@@ -6,7 +6,7 @@
     - import_tasks: tasks/set_custom_facts.yml
 
   roles:
-    - {role: brianshumate.consul, tags: ['consul']}
+    - {role: brianshumate.consul, tags: ['consul', 'hashicorp']}
 
   vars:
     consul_iface: eth0
@@ -28,7 +28,7 @@
   become: yes
 
   roles:
-    - {role: brianshumate.vault, tags: ['vault']}
+    - {role: brianshumate.vault, tags: ['vault', 'hashicorp']}
 
   vars:
     vault_iface: eth0
@@ -50,7 +50,7 @@
 
   roles:
     - {role: geerlingguy.docker_arm, tags: ['docker']}
-    - {role: brianshumate.nomad, tags: ['docker', 'nomad']}
+    - {role: brianshumate.nomad, tags: ['docker', 'nomad', 'hashicorp']}
 
   vars:
     nomad_iface: eth0
