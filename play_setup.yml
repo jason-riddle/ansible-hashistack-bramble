@@ -1,3 +1,4 @@
 - {import_playbook: subplay_static_network.yml, tags: ['networking']}
 - {import_playbook: subplay_wifi.yml, tags: ['networking', 'wifi']}
+- {import_playbook: subplay_collectd.yml, tags: ['collectd']}
 - {import_playbook: subplay_ssm.yml, tags: ['ssm']}
