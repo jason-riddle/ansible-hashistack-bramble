@@ -6,13 +6,13 @@
     - {role: brianshumate.consul, tags: ['consul', 'hashicorp']}
 
   vars:
-    consul_iface: eth0
     consul_datacenter: "homeserver"
     consul_acl_datacenter: "homeserver"
     consul_domain: "consul"
     consul_recursors: "{{ dns_nameservers }}"
     # Think carefully before modifying the following variables
-    consul_client_address: "0.0.0.0"
+    consul_iface: eth0 # TODO: This actually isn't being used anywhere in the upstream consul role, might be a bug
+    consul_client_address: "{{ hostvars[inventory_hostname]['ansible_eth0']['ipv4']['address'] }}"
     consul_dnsmasq_enable: yes
     consul_acl_master_token_display: yes
     # Telemetry
@@ -28,12 +28,14 @@
     - {role: brianshumate.vault, tags: ['vault', 'hashicorp']}
 
   vars:
-    vault_iface: eth0
     vault_cluster_name: "dc1"
     vault_datacenter: "homeserver"
     vault_domain: "consul"
     vault_ui: yes
     vault_cluster_disable: yes
+    # Think carefully before modifying the following variables
+    vault_iface: eth0
+    vault_consul: "http://{{ hostvars[inventory_hostname]['ansible_eth0']['ipv4']['address'] }}:8500"
     # Telemetry
     vault_telemetry_enabled: yes
     vault_statsd_address: "localhost:8125"
@@ -50,8 +52,6 @@
     - {role: brianshumate.nomad, tags: ['docker', 'nomad', 'hashicorp']}
 
   vars:
-    nomad_iface: eth0
-    nomad_network_interface: eth0
     nomad_datacenter: "homeserver"
     nomad_domain: "consul"
     nomad_use_consul: yes
@@ -60,10 +60,11 @@
     # Don't set the network speed
     nomad_network_speed: 0
     # Think carefully before modifying the following variables
+    nomad_iface: eth0
+    nomad_network_interface: eth0
     nomad_bootstrap_expect: 1
-    nomad_consul_address: http://127.0.0.1:8500
-    nomad_vault_address: http://active.vault.service.homeserver.consul:8200
-    nomad_bind_address: "0.0.0.0"
+    nomad_consul_address: "http://{{ hostvars[inventory_hostname]['ansible_eth0']['ipv4']['address'] }}:8500"
+    nomad_vault_address: "http://{{ hostvars[inventory_hostname]['ansible_eth0']['ipv4']['address'] }}:8200"
     # Telemetry
     nomad_config_custom:
       telemetry:
