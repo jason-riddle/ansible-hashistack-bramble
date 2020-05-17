@@ -57,7 +57,8 @@
     nomad_use_consul: yes
     nomad_vault_enabled: yes
     nomad_docker_enable: yes
-    nomad_network_speed: 10
+    # Don't set the network speed
+    nomad_network_speed: 0
     # Think carefully before modifying the following variables
     nomad_bootstrap_expect: 1
     nomad_consul_address: http://127.0.0.1:8500
