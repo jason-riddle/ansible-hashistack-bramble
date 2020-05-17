@@ -36,12 +36,11 @@
     HTTP_Port    2020
 
 [INPUT]
-    Name cpu
-    Tag  cpu.local
-    # Interval Sec
-    # ====
-    # Read interval (sec) Default: 1
-    Interval_Sec 1
+    Name        tail
+    Tag         docker.*
+    Path        /var/lib/docker/containers/**/*.log
+    Parser      docker
+    Docker_Mode on
 
 [OUTPUT]
     Name  stdout
