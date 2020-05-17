@@ -106,6 +106,8 @@ Then add these hosts to `inventory/hosts`. For example:
     [nomad_instances]
     pi01.bramble.local nomad_node_role=both
 
+See [inventory/examples/README.md](inventory/examples/README.md) for additional host configurations
+
 ### 5 - Apply all playbooks
 
     # Optional: Ping all hosts first
