@@ -3,40 +3,48 @@
   become: yes
 
   tasks:
-    - name: Install collectd packages.
+    - name: Install fluentbit dependencies.
       package:
         name: "{{ item }}"
         state: present
       with_items:
-        - collectd
+        - libssl1.0.2
 
-    - name: Ensure /etc/collectd exists.
-      file:
-        path: "/etc/collectd"
-        state: "directory"
-        recurse: yes
+    - name: Add td-agent-bit (fluentbit) apt signing key.
+      apt_key:
+        url: https://packages.fluentbit.io/fluentbit.key
+        state: present
 
-    - name: Install /etc/collectd/collectd.conf.
+    - name: Add td-agent-bit (fluentbit) repository to sources list.
+      apt_repository:
+        repo: deb https://packages.fluentbit.io/raspbian/buster buster main
+        state: present
+
+    - name: Install td-agent-bit (fluentbit) package.
+      package:
+        name: td-agent-bit
+        state: present
+
+    - name: Install /etc/td-agent-bit/td-agent-bit.conf.
       template:
         src: "templates/{{ item.template }}"
         dest: "{{ item.dest }}"
         mode: 0644
       with_items:
-        - { template: collectd.conf.j2, dest: /etc/collectd/collectd.conf }
+        - { template: fluentbit/td-agent-bit.conf.j2, dest: /etc/td-agent-bit/td-agent-bit.conf }
+        - { template: fluentbit/parsers.conf.j2, dest: /etc/td-agent-bit/parsers.conf }
+        - { template: fluentbit/plugins.conf.j2, dest: /etc/td-agent-bit/plugins.conf }
       notify:
-        - restart collectd
+        - restart td-agent-bit
 
-    - name: Validate /etc/collectd/collectd.conf.
-      command: collectd -t
-
-    - name: Ensure collectd is started and enabled.
+    - name: Ensure td-agent-bit (fluentbit) is started and enabled.
       service:
-        name: collectd
+        name: td-agent-bit
         state: started
         enabled: true
 
   handlers:
-    - name: restart collectd
+    - name: restart td-agent-bit
       service:
-        name: collectd
+        name: td-agent-bit
         state: restarted
