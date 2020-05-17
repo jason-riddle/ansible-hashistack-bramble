@@ -78,6 +78,7 @@ LoadPlugin logfile
 ##############################################################################
 
 LoadPlugin statsd
+LoadPlugin write_log
 
 ##############################################################################
 # Plugin configuration                                                       #
@@ -101,4 +102,8 @@ LoadPlugin statsd
 	TimerUpper     false
 	TimerSum       false
 	TimerCount     false
+</Plugin>
+
+<Plugin write_log>
+	Format Graphite
 </Plugin>
