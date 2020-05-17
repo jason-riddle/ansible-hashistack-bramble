@@ -46,6 +46,9 @@
   vars_files:
     - vaulted_vars/nomad_sensitive.yml
 
+  pre_tasks:
+    - {import_tasks: tasks/cgroup_features.yml, tags: ['docker']}
+
   roles:
     - {role: geerlingguy.docker_arm, tags: ['docker']}
     - {role: brianshumate.nomad, tags: ['docker', 'nomad', 'hashicorp']}
