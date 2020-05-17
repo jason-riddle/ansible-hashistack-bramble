@@ -18,6 +18,11 @@
     consul_client_address: "0.0.0.0"
     consul_dnsmasq_enable: yes
     consul_acl_master_token_display: yes
+    # Telemetry
+    consul_config_custom:
+      telemetry:
+        statsd_address: "localhost:8125"
+        disable_hostname: true
 
 - hosts: vault_instances
   become: yes
@@ -32,6 +37,10 @@
     vault_domain: "consul"
     vault_ui: yes
     vault_cluster_disable: yes
+    # Telemetry
+    vault_telemetry_enabled: yes
+    vault_statsd_address: "localhost:8125"
+    vault_telemetry_disable_hostname: yes
 
 - hosts: nomad_instances
   become: true
@@ -57,3 +66,8 @@
     nomad_consul_address: http://127.0.0.1:8500
     nomad_vault_address: http://active.vault.service.homeserver.consul:8200
     nomad_bind_address: "0.0.0.0"
+    # Telemetry
+    nomad_config_custom:
+      telemetry:
+        statsd_address: "localhost:8125"
+        disable_hostname: true
