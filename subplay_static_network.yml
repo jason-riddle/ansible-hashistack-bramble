@@ -71,7 +71,7 @@
     - meta: flush_handlers
 
   post_tasks:
-    - import_tasks: tasks/ping.yml
+    - import_tasks: tasks/check_ping_connectivity.yml
 
   handlers:
     - name: update hostname

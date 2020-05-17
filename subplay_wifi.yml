@@ -10,4 +10,4 @@
     - jason_riddle.wpa_supplicant
 
   post_tasks:
-    - import_tasks: tasks/ping.yml
+    - import_tasks: tasks/check_ping_connectivity.yml

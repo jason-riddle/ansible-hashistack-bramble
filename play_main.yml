@@ -3,7 +3,7 @@
   become: yes
 
   pre_tasks:
-    - import_tasks: tasks/add_custom_facts.yml
+    - import_tasks: tasks/set_custom_facts.yml
 
   roles:
     - {role: brianshumate.consul, tags: ['consul']}
