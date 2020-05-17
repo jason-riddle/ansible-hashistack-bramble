@@ -1,0 +1,5 @@
+---
+# https://gryzli.info/2017/12/21/ansible-debug-print-variables
+- name: Display all variables/facts known for a host
+  debug:
+    var: hostvars[inventory_hostname]
