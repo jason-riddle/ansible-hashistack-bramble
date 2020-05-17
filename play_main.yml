@@ -2,9 +2,6 @@
 - hosts: consul_instances
   become: yes
 
-  pre_tasks:
-    - import_tasks: tasks/set_custom_facts.yml
-
   roles:
     - {role: brianshumate.consul, tags: ['consul', 'hashicorp']}
 
@@ -13,7 +10,7 @@
     consul_datacenter: "homeserver"
     consul_acl_datacenter: "homeserver"
     consul_domain: "consul"
-    consul_recursors: "{{ bramble_dns_nameservers }}"
+    consul_recursors: "{{ dns_nameservers }}"
     # Think carefully before modifying the following variables
     consul_client_address: "0.0.0.0"
     consul_dnsmasq_enable: yes
