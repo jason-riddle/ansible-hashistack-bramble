@@ -1,0 +1,42 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+    - name: Install collectd packages.
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - collectd
+
+    - name: Ensure /etc/collectd exists.
+      file:
+        path: "/etc/collectd"
+        state: "directory"
+        recurse: yes
+
+    - name: Install /etc/collectd/collectd.conf.
+      template:
+        src: "templates/{{ item.template }}"
+        dest: "{{ item.dest }}"
+        mode: 0644
+      with_items:
+        - { template: collectd.conf.j2, dest: /etc/collectd/collectd.conf }
+      notify:
+        - restart collectd
+
+    - name: Validate /etc/collectd/collectd.conf.
+      command: collectd -t
+
+    - name: Ensure collectd is started and enabled.
+      service:
+        name: collectd
+        state: started
+        enabled: true
+
+  handlers:
+    - name: restart collectd
+      service:
+        name: collectd
+        state: restarted
