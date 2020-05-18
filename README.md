@@ -128,6 +128,12 @@ See [inventory/README.md](inventory/README.md) for additional host configuration
     # Install and Configure Vault, Consul, and Nomad w/ Docker
     make main
 
+Vault will need to be unsealed if already initialized. Visit
+
+    http://10.0.100.61:8500/ui/homeserver/services/vault
+
+to list all of the vault instances and unseal each instance
+
 ### 6 - Visit Dashboards
 
 Below is a table of how to locate dashboards.
