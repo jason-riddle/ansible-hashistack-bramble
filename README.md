@@ -106,7 +106,14 @@ Then add these hosts to `inventory/hosts`. For example:
     [nomad_instances]
     pi01.bramble.local nomad_node_role=both
 
-See [inventory/examples/README.md](inventory/examples/README.md) for additional host configurations
+Update `inventory/group_vars/all.yml` with the `eth0` mac address, hostname, and static ip
+
+    mac_address_mapping:
+      "b8:27:eb:21:e8:fd":
+        hostname: "pi01"
+        ip: "10.0.100.61"
+
+See [inventory/README.md](inventory/README.md) for additional host configurations
 
 ### 5 - Apply all playbooks
 

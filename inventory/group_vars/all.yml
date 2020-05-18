@@ -16,6 +16,9 @@ mac_address_mapping:
   "b8:27:eb:9d:8d:03":
     hostname: "pi02"
     ip: "10.0.100.62"
+  "b8:27:eb:0e:49:d2":
+    hostname: "pi03"
+    ip: "10.0.100.63"
 
 # Nameservers to use in resolv.conf.
 dns_nameservers:
