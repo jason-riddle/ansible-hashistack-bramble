@@ -1,3 +1,8 @@
+# Use the following to determine ipv6 hosts
+# myself=$(ifconfig en0 | grep -w 'inet6' | awk '{print $2}')
+# ipv6_hosts=$(ping6 -c2 -I en0 ff02::1 | grep icmp_seq | grep -v $myself | cut -d, -f1 | awk '{print $NF}')
+# echo $ipv6_hosts
+
 pi01.bramble.local ansible_host=fe80::dd16:ac4e:a633:edbb%en0
 pi02.bramble.local ansible_host=fe80::f2dd:3a36:39ca:91f1%en0
 pi03.bramble.local ansible_host=fe80::22c0:f3e7:514b:2b66%en0
