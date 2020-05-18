@@ -8,7 +8,7 @@ ansible_python_interpreter: /usr/bin/python
 ## Static Networking
 
 # Mapping of what eth0 MAC addresses should be configured with specific IPs.
-# Inspect: ansible all -i inventory -m setup -a 'filter=ansible_eth0'
+# Verify with: ansible all -i inventory -m setup -a 'filter=ansible_eth0'
 mac_address_mapping:
   "b8:27:eb:21:e8:fd":
     hostname: "pi01"
