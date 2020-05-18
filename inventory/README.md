@@ -33,5 +33,5 @@ pi02.bramble.local
 
 [nomad_instances]
 pi01.bramble.local nomad_node_role=both
-pi01.bramble.local nomad_node_role=client
+pi02.bramble.local nomad_node_role=client
 ```
