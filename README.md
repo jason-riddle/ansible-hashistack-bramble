@@ -171,3 +171,11 @@ Get the ip address of the active vault instance.
     dig +short @127.0.0.1 -p 8600 active.vault.service.homeserver.consul.
 
 Ref: https://www.consul.io/docs/agent/dns.html#standard-lookup
+
+### Copy Logs to Host Machine
+
+It's easier to analyze logs on your desktop than over SSH. Copy logs to your
+desktop machine from `pi01` with the following commands
+
+    ssh pi@pi01 "sudo tar cvzf - /var/log" > var_logs.tar.gz
+    ssh pi@pi01 "sudo -- sh -c 'find /var/lib/docker/containers -name '*.log' -print0 | xargs -0 tar cvzf -'" > containers_logs.tar.gz
