@@ -22,6 +22,7 @@ monitoring, and control.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
+- [Repo Layout](#repo-layout)
 - [Quick Start Guide](#quick-start-guide)
   - [1 - Install dependencies](#1---install-dependencies)
   - [2 - Modify group variables](#2---modify-group-variables)
@@ -36,6 +37,50 @@ monitoring, and control.
 - [Bonus: Custom Raspbian Image](#bonus-custom-raspbian-image)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Repo Layout
+
+```sh
+$ tree -L 1
+.
+├── LICENSE
+├── Makefile
+├── README.md
+├── ansible.cfg
+├── inventory
+├── play_main.yml
+├── play_setup.yml
+├── requirements.yml
+├── roles
+├── subplay_collectd.yml
+├── subplay_fluentbit.yml
+├── subplay_ssm.yml
+├── subplay_static_network.yml
+├── subplay_wifi.yml
+├── tasks
+├── templates
+└── vaulted_vars
+```
+
+There are two main playbooks
+
+- play_main.yml
+  - Install Consul, Vault, Docker, and Nomad.
+- play_setup.yml
+  - Imports subplay_static_network.yml, subplay_wifi.yml, subplay_collectd.yml, subplay_fluentbit.yml, and subplay_ssm.yml.
+
+and five smaller playbooks
+
+- subplay_static_network.yml
+  - Configure static networking as defined by `mac_address_mapping` in [inventory/group_vars/all.yml](inventory/group_vars/all.yml).
+- subplay_wifi.yml
+  - Configure wifi.
+- subplay_collectd.yml
+  - Install and configure collectd. Modify `templates/collectd.conf.j2` as needed.
+- subplay_fluentbit.yml
+  - Install and configure fluentbit.
+- subplay_ssm.yml
+  - Install and configure Amazon SSM Agent.
 
 ## Quick Start Guide
 
