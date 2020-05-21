@@ -32,6 +32,8 @@ monitoring, and control.
 - [Consul DNS Queries](#consul-dns-queries)
   - [Querying Nodes](#querying-nodes)
   - [Querying Services](#querying-services)
+  - [Copy Logs to Host Machine](#copy-logs-to-host-machine)
+- [Bonus: Custom Raspbian Image](#bonus-custom-raspbian-image)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -179,3 +181,8 @@ desktop machine from `pi01` with the following commands
 
     ssh pi@pi01 "sudo tar cvzf - /var/log" > var_logs.tar.gz
     ssh pi@pi01 "sudo -- sh -c 'find /var/lib/docker/containers -name '*.log' -print0 | xargs -0 tar cvzf -'" > containers_logs.tar.gz
+
+## Bonus: Build Custom Raspbian Image with Packer
+
+Can be paired with https://github.com/jason-riddle/packer-build-raspbian-os
+for creating custom Raspbian OS images.
