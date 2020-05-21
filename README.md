@@ -1,22 +1,19 @@
 # Run the Hashistack on a Raspberry Pi Cluster
 
-Inspired by https://github.com/geerlingguy/raspberry-pi-dramble and
-https://github.com/mockingbirdconsulting/HashicorpAtHome with slight
-modifications.
+This project has two goals
 
-This project has three goals
+    1. Run docker containers on a cluster of Raspberry Pis.
+    2. Keep maintenance burden as low as possible by using the Hashistack and "boring" tools.
 
-    1. Run on Raspberry Pis
-    2. Keep maintenance complexity as low as possible
-    3. Make it easy to run docker containers on remote hosts
-
-Installs and Configures Vault, Consul, and Nomad w/ Docker to run on a cluster
+Installs and configures Vault, Consul, and Nomad w/ Docker to run on a cluster
 of Raspberry Pis. A cluster of Raspberry Pis can be referred to as a
-[Bramble](https://elinux.org/Bramble). Thus the name
-`ansible-hashistack-bramble`.
+[Bramble](https://elinux.org/Bramble). Thus the name `ansible-hashistack-bramble`.
 
-Optionally, the Amazon SSM agent can be installed for additional access,
-monitoring, and control.
+Optionally, the Amazon SSM agent, collectd, and fluentbit can be installed for
+additional monitoring.
+
+Originally inspired by https://github.com/geerlingguy/raspberry-pi-dramble and
+https://github.com/mockingbirdconsulting/HashicorpAtHome.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
