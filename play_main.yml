@@ -19,8 +19,9 @@
     # Telemetry
     consul_config_custom:
       telemetry:
-        statsd_address: "localhost:8125"
         disable_hostname: true
+        prometheus_retention_time: "30s"
+        statsd_address: "localhost:8125"
 
 - hosts: vault_instances
   become: yes
@@ -38,8 +39,9 @@
     vault_iface: eth0
     # Telemetry
     vault_telemetry_enabled: yes
-    vault_statsd_address: "localhost:8125"
     vault_telemetry_disable_hostname: yes
+    vault_prometheus_retention_time: "30s"
+    vault_statsd_address: "localhost:8125"
 
 - hosts: nomad_instances
   become: true
@@ -71,5 +73,6 @@
     # Telemetry
     nomad_config_custom:
       telemetry:
+        prometheus_metrics: true
         statsd_address: "localhost:8125"
         disable_hostname: true
