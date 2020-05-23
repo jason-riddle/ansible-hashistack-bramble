@@ -70,6 +70,11 @@
     nomad_bootstrap_expect: 1
     nomad_consul_address: "http://127.0.0.1:8500"
     nomad_vault_address: "http://active.vault.service.homeserver.consul:8200"
+    nomad_reserved_cpu: "100"
+    nomad_reserved_memory: "25"
+    nomad_reserved_ports: "22,80"
+    nomad_options:
+      'driver.whitelist': 'docker'
     # Telemetry
     nomad_config_custom:
       telemetry:
