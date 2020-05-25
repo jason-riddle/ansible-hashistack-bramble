@@ -4,4 +4,6 @@
 - src: geerlingguy.docker_arm
 - src: brianshumate.consul
 - src: brianshumate.vault
-- src: brianshumate.nomad
+- name: brianshumate.nomad
+  src: https://github.com/ansible-community/ansible-nomad
+  version: origin/master
