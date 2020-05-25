@@ -78,7 +78,7 @@
         path: /opt/grafana/data
         owner: pi
         group: pi
-        mode: 0755
+        mode: '0755'
         read_only: false
     nomad_options:
       'driver.whitelist': 'docker'
