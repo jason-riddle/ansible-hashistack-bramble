@@ -73,6 +73,13 @@
     nomad_reserved_cpu: "100"
     nomad_reserved_memory: "25"
     nomad_reserved_ports: "22,80"
+    nomad_host_volumes:
+      - name: grafana
+        path: /opt/grafana/data
+        owner: pi
+        group: pi
+        mode: 0755
+        read_only: false
     nomad_options:
       'driver.whitelist': 'docker'
     # Telemetry
