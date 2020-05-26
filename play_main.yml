@@ -76,8 +76,8 @@
     nomad_host_volumes:
       - name: grafana
         path: /opt/grafana/data
-        owner: pi
-        group: pi
+        owner: "104"
+        group: "docker"
         mode: '0755'
         read_only: false
     nomad_options:
