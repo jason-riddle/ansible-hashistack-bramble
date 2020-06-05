@@ -1,0 +1,12 @@
+[Unit]
+Description=collectd-web
+After=collectd.service
+Requires=collectd.service
+
+[Service]
+ExecStart=/usr/bin/python2 runserver.py 0.0.0.0 8888
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

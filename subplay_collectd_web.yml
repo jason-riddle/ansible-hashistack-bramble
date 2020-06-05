@@ -1,0 +1,43 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+    - name: Install collectd-web packages.
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - git
+
+    - name: Clone collectd-web to /usr/local/collectd-web.
+      git:
+        repo: https://github.com/httpdss/collectd-web.git
+        dest: /usr/local/collectd-web
+        version: master
+
+    - name: Install /etc/systemd/system/collectd-web.service.
+      template:
+        src: "templates/{{ item.template }}"
+        dest: "{{ item.dest }}"
+        mode: 0644
+      with_items:
+        - { template: collectd-web.service.j2, dest: /etc/systemd/system/collectd-web.service }
+      notify:
+        - systemctl daemon-reload
+        - restart collectd-web
+
+    - name: Ensure collectd-web is started and enabled.
+      service:
+        name: collectd-web
+        state: started
+        enabled: true
+
+  handlers:
+    - name: systemctl daemon-reload
+      command: systemctl daemon-reload
+
+    - name: restart collectd-web
+      service:
+        name: collectd-web
+        state: restarted
